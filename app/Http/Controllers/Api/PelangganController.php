@@ -118,7 +118,7 @@ class PelangganController extends Controller
         }
 
         $data = $request->validate([
-            'nim' => 'sometimes|required|string|unique:pelanggan,nim' . $id,
+            'nim' => 'sometimes|required|string|unique:pelanggan,nim,' . $id,
             'nama' => 'sometimes|required|string|max:255',
             'password' => 'sometimes|required|string|min:6',    
             'foto_profile' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
