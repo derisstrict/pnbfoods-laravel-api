@@ -17,9 +17,6 @@ Route::apiResource('detail-orderan', DetailOrderanController::class);
 Route::apiResource('pembayaran', PembayaranController::class);
 Route::apiResource('favorit', FavoritController::class);
 
-
-Route::apiResource('produk', ProdukController::class);
-Route::apiResource('kantin', KantinController::class);
 Route::post('pelanggan/login', [PelangganController::class, 'login']);
 Route::post('penjual/login', [PenjualController::class, 'login']);
 Route::middleware('auth:sanctum')->group(function () {
