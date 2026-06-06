@@ -35,7 +35,7 @@ class PenjualController extends Controller
     public function store(Request $request): JsonResponse
     {
         $data = $request->validate([
-            'email' => 'required|string|unique:penjual,email',
+            'email' => 'required|string|unique:penjual,email,',
             'nama' => 'required|string|max:255',
             'password' => 'required|string|min:6',
             'foto_profile' => 'nullable|image|mimes:jpg,jpeg,png|max:5120',
@@ -124,7 +124,7 @@ class PenjualController extends Controller
         }
 
         $data = $request->validate([
-            'email' => 'sometimes|required|string|unique:penjual,email' . $id,
+            'email' => 'sometimes|required|string|unique:penjual,email,' . $id,
             'nama' => 'sometimes|required|string|max:255',
             'password' => 'sometimes|required|string|min:6',    
             'foto_profile' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',

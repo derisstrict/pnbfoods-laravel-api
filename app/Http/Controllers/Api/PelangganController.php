@@ -35,7 +35,7 @@ class PelangganController extends Controller
     public function store(Request $request): JsonResponse
     {
         $data = $request->validate([
-            'nim' => 'required|string|unique:pelanggan,nim',
+            'nim' => 'required|string|unique:pelanggan,nim,',
             'nama' => 'required|string|max:255',
             'password' => 'required|string|min:6',
         ]);
