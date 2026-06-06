@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Kantin extends Model
 {
@@ -22,5 +23,10 @@ class Kantin extends Model
             return null;
         }
         return url('storage/' . $this->foto_kantin);
+    }
+
+    public function penjual(): HasOne
+    {
+        return $this->hasOne(Penjual::class);
     }
 }

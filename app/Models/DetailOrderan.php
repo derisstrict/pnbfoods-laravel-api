@@ -3,12 +3,15 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class DetailOrderan extends Model
 {
     protected $table = 'detail_orderan';
 
     protected $fillable = [
+        'orderan_id',
+        'produk_id',
         'jumlah',
         'catatan',
     ];
@@ -16,4 +19,14 @@ class DetailOrderan extends Model
     protected $casts = [
         'jumlah' => 'integer',
     ];
+
+    public function orderan(): BelongsTo
+    {
+        return $this->belongsTo(Orderan::class);
+    }
+
+    public function produk(): BelongsTo
+    {
+        return $this->belongsTo(Produk::class);
+    }
 }

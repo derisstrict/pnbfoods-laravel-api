@@ -3,12 +3,15 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Produk extends Model
 {
     protected $table = 'produk';
 
     protected $fillable = [
+        'penjual_id',
         'nama_produk',
         'foto_produk',
         'deskripsi_produk',
@@ -30,5 +33,20 @@ class Produk extends Model
             return null;
         }
         return url('storage/' . $this->foto_produk);
+    }
+
+    public function penjual(): BelongsTo
+    {
+        return $this->belongsTo(Penjual::class);
+    }
+
+    public function detailOrderan(): HasMany
+    {
+        return $this->hasMany(DetailOrderan::class);
+    }
+
+    public function favorit(): HasMany
+    {
+        return $this->hasMany(Favorit::class);
     }
 }
