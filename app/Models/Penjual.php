@@ -11,10 +11,11 @@ class Penjual extends Authenticatable
 
     protected $table = 'penjual';
 
+    const ROLE = 'penjual';
+
     protected $fillable = [
         'email',
         'nama',
-        'role',
         'password',
         'foto_profile',
     ];

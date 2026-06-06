@@ -39,7 +39,7 @@ class PelangganController extends Controller
             'nama' => 'required|string|max:255',
             'password' => 'required|string|min:6',
         ]);
-        
+
         $pelanggan = Pelanggan::create($data);
 
         return response()->json([
@@ -72,6 +72,7 @@ class PelangganController extends Controller
             'success' => true,
             'message' => 'Login berhasil',
             'token' => $token,
+            'role' => Pelanggan::ROLE,
             'data' => $pelanggan,
         ]);
     }
@@ -118,7 +119,7 @@ class PelangganController extends Controller
         }
 
         $data = $request->validate([
-            'nim' => 'sometimes|required|string|unique:pelanggan,nim' . $id,
+            'nim' => 'sometimes|required|string|unique:pelanggan,nim,' . $id,
             'nama' => 'sometimes|required|string|max:255',
             'password' => 'sometimes|required|string|min:6',    
             'foto_profile' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
@@ -164,6 +165,33 @@ class PelangganController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Pelanggan berhasil dihapus',
+        ]);
+    }
+
+    //lupa password pelanggan
+    public function forgotPassword(Request $request): JsonResponse
+    {
+        $request->validate([
+            'nim' => 'required|string',
+            'password' => 'required|string|min:6|confirmed',
+        ]);
+
+        $pelanggan = Pelanggan::where('nim', $request->nim)->first();
+
+        if (!$pelanggan) {
+            return response()->json([
+                'success' => false,
+                'message' => 'NIM tidak ditemukan',
+            ], 404);
+        }
+
+        $pelanggan->update([
+            'password' => $request->password,
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Password berhasil direset',
         ]);
     }
 }

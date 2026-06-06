@@ -29,3 +29,5 @@ Route::middleware('auth:sanctum')->group(function () {
 });
 Route::post('pelanggan', [PelangganController::class, 'store']);
 Route::post('penjual', [PenjualController::class, 'store']);
+Route::post('/pelanggan/forgot-password', [PelangganController::class, 'forgotPassword']);
+Route::post('/penjual/forgot-password', [PenjualController::class, 'forgotPassword']);
