@@ -18,6 +18,7 @@ return new class extends Migration
             $table->text('deskripsi_produk')->nullable();
             $table->string('kategori_produk', 100);
             $table->decimal('harga_produk', 15, 2);
+            $table->foreignId('penjual_id')->constrained('penjual')->cascadeOnDelete();
             $table->integer('stok')->default(0);
             $table->timestamps();
         });

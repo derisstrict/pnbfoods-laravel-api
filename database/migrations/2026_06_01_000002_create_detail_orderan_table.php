@@ -10,6 +10,8 @@ return new class extends Migration
     {
         Schema::create('detail_orderan', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('orderan_id')->constrained('orderan')->cascadeOnDelete();
+            $table->foreignId('produk_id')->nullable()->constrained('produk')->nullOnDelete();
             $table->integer('jumlah');
             $table->text('catatan')->nullable();
             $table->timestamps();

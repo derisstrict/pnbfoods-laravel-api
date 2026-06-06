@@ -10,7 +10,8 @@ return new class extends Migration
     {
         Schema::create('favorit', function (Blueprint $table) {
             $table->id();
-            $table->string('produk_favorit', 255);
+            $table->foreignId('pelanggan_id')->constrained('pelanggan')->cascadeOnDelete();
+            $table->foreignId('produk_id')->constrained('produk')->cascadeOnDelete();
             $table->timestamps();
         });
     }

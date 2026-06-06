@@ -30,6 +30,7 @@ return new class extends Migration
             $table->enum('role', ['penjual', 'pelanggan'])->default('penjual');
             $table->string('password');
             $table->string('foto_profile')->nullable();
+            $table->foreignId('kantin_id')->nullable();
             $table->timestamps();
         });
     }

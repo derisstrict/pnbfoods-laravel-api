@@ -18,6 +18,10 @@ return new class extends Migration
             $table->string('kategori');
             $table->timestamps();
         });
+
+        Schema::table('penjual', function (Blueprint $table) {
+            $table->foreign('kantin_id')->references('id')->on('kantin')->nullOnDelete();
+        });
     }
 
     /**
@@ -25,6 +29,10 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::table('penjual', function (Blueprint $table) {
+            $table->dropForeign(['kantin_id']);
+        });
+
         Schema::dropIfExists('kantins');
     }
 };

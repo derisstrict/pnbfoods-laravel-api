@@ -13,6 +13,7 @@ return new class extends Migration
             $table->string('status_orderan', 50);
             $table->decimal('total_harga', 15, 2);
             $table->dateTime('tanggal_orderan');
+            $table->foreignId('pelanggan_id')->constrained('pelanggan')->cascadeOnDelete();
             $table->timestamps();
         });
     }
