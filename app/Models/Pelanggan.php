@@ -12,10 +12,11 @@ class Pelanggan extends Authenticatable
     
     protected $table = 'pelanggan';
 
+    const ROLE = 'pelanggan';
+
     protected $fillable = [
         'nim',
         'nama',
-        'role',
         'password',
         'foto_profile',
     ];

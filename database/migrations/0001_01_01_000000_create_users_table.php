@@ -16,7 +16,6 @@ return new class extends Migration
             $table->id();
             $table->string('nim')->unique();
             $table->string('nama');
-            $table->enum('role', ['penjual', 'pelanggan'])->default('pelanggan');
             $table->string('password');
             $table->string('foto_profile')->nullable();
             $table->timestamps();
@@ -27,7 +26,6 @@ return new class extends Migration
             $table->id();
             $table->string('email')->unique();
             $table->string('nama');
-            $table->enum('role', ['penjual', 'pelanggan'])->default('penjual');
             $table->string('password');
             $table->string('foto_profile')->nullable();
             $table->foreignId('kantin_id')->nullable();

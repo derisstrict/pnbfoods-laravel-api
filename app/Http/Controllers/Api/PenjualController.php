@@ -38,13 +38,7 @@ class PenjualController extends Controller
             'email' => 'required|string|unique:penjual,email,',
             'nama' => 'required|string|max:255',
             'password' => 'required|string|min:6',
-            'foto_profile' => 'nullable|image|mimes:jpg,jpeg,png|max:5120',
         ]);
-
-        // Handle upload foto profile jika ada
-        if ($request->hasFile('foto_profile')) {
-            $data['foto_profile'] = $request->file('foto_profile')->store('profil_penjual', 'public');
-        }
 
         $penjual = Penjual::create($data);
 
@@ -78,6 +72,7 @@ class PenjualController extends Controller
             'success' => true,
             'message' => 'Login berhasil',
             'token' => $token,
+            'role' => Penjual::ROLE,
             'data' => $penjual,
         ]);
     }
@@ -170,6 +165,33 @@ class PenjualController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Penjual berhasil dihapus',
+        ]);
+    }
+
+    //lupa password penjual
+    public function forgotPassword(Request $request): JsonResponse
+    {
+        $request->validate([
+            'email' => 'required|string',
+            'password' => 'required|string|min:6|confirmed',
+        ]);
+
+        $penjual = Penjual::where('email', $request->email)->first();
+
+        if (!$penjual) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Email tidak ditemukan',
+            ], 404);
+        }
+
+        $penjual->update([
+            'password' => $request->password,
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Password berhasil direset',
         ]);
     }
 }
