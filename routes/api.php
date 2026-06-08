@@ -22,12 +22,12 @@ Route::post('penjual/login', [PenjualController::class, 'login']);
 Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('pelanggan', PelangganController::class)->except(['store']);
     Route::post('pelanggan/logout', [PelangganController::class, 'logout']);
+    Route::post('pelanggan/change-password', [PelangganController::class, 'changePassword']);
 });
 Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('penjual', PenjualController::class)->except(['store']);
     Route::post('penjual/logout', [PenjualController::class, 'logout']);
+    Route::post('penjual/change-password', [PenjualController::class, 'changePassword']);
 });
 Route::post('pelanggan', [PelangganController::class, 'store']);
 Route::post('penjual', [PenjualController::class, 'store']);
-Route::post('/pelanggan/forgot-password', [PelangganController::class, 'forgotPassword']);
-Route::post('/penjual/forgot-password', [PenjualController::class, 'forgotPassword']);

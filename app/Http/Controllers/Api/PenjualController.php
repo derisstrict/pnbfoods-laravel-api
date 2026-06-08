@@ -168,30 +168,37 @@ class PenjualController extends Controller
         ]);
     }
 
-    //lupa password penjual
-    public function forgotPassword(Request $request): JsonResponse
+    //ubah password penjual
+    public function changePassword(Request $request): JsonResponse
     {
         $request->validate([
-            'email' => 'required|string',
+            'password_lama' => 'required|string',
             'password' => 'required|string|min:6|confirmed',
         ]);
 
-        $penjual = Penjual::where('email', $request->email)->first();
+        $penjual = $request->user(); 
 
         if (!$penjual) {
             return response()->json([
                 'success' => false,
-                'message' => 'Email tidak ditemukan',
-            ], 404);
+                'message' => 'Pengguna tidak terautentikasi',
+            ], 401);
+        }
+
+        if (!Hash::check($request->password_lama, $penjual->password)) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Password lama yang Anda masukkan salah',
+            ], 422);
         }
 
         $penjual->update([
-            'password' => $request->password,
+            'password' => Hash::make($request->password), 
         ]);
 
         return response()->json([
             'success' => true,
-            'message' => 'Password berhasil direset',
-        ]);
+            'message' => 'Password berhasil diperbarui',
+        ], 200);
     }
 }

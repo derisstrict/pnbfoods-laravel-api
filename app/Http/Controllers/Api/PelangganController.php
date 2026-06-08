@@ -168,30 +168,37 @@ class PelangganController extends Controller
         ]);
     }
 
-    //lupa password pelanggan
-    public function forgotPassword(Request $request): JsonResponse
+    //ubah password pelanggan
+    public function changePassword(Request $request): JsonResponse
     {
         $request->validate([
-            'nim' => 'required|string',
+            'password_lama' => 'required|string',
             'password' => 'required|string|min:6|confirmed',
         ]);
 
-        $pelanggan = Pelanggan::where('nim', $request->nim)->first();
+        $pelanggan = $request->user();
 
         if (!$pelanggan) {
             return response()->json([
                 'success' => false,
-                'message' => 'NIM tidak ditemukan',
-            ], 404);
+                'message' => 'Pengguna tidak terautentikasi',
+            ], 401);
+        }
+
+        if (!Hash::check($request->password_lama, $pelanggan->password)) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Password lama yang Anda masukkan salah',
+            ], 422);
         }
 
         $pelanggan->update([
-            'password' => $request->password,
+            'password' => Hash::make($request->password), 
         ]);
 
         return response()->json([
             'success' => true,
-            'message' => 'Password berhasil direset',
-        ]);
+            'message' => 'Password berhasil diperbarui',
+        ], 200);
     }
 }
