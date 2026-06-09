@@ -14,7 +14,6 @@ class PelangganSeeder extends Seeder
             [
                 'nim' => '2415354001',
                 'nama' => 'a',
-                'role' => 'pelanggan',
                 'password' => Hash::make('a'),
                 'foto_profile' => null,
                 'created_at' => now(),

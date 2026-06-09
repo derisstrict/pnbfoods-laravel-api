@@ -14,8 +14,15 @@ class PenjualSeeder extends Seeder
             [
                 'email' => 'b@gmail.com',
                 'nama' => 'b',
-                'role' => 'penjual', 
                 'password' => Hash::make('b'),
+                'foto_profile' => null,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'email' => 'b1@gmail.com',
+                'nama' => 'b1',
+                'password' => Hash::make('b1'),
                 'foto_profile' => null,
                 'created_at' => now(),
                 'updated_at' => now(),
