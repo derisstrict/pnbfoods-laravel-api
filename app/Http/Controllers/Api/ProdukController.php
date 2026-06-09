@@ -30,6 +30,32 @@ class ProdukController extends Controller
         ]);
     }
 
+    public function dariPenjualId($penjualId): JsonResponse
+    {
+        $produk = Produk::where('penjual_id', $penjualId)
+            ->orderBy('created_at', 'desc')
+            ->paginate(self::PER_PAGE);
+
+        if ($produk->isEmpty()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Produk tidak ditemukan',
+            ], 404);
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Daftar produk berhasil diambil',
+            'data' => ProdukResource::collection($produk),
+            'pagination' => [
+                'current_page' => $produk->currentPage(),
+                'last_page' => $produk->lastPage(),
+                'per_page' => $produk->perPage(),
+                'total' => $produk->total(),
+            ],
+        ]);
+    }
+
     public function store(StoreProdukRequest $request): JsonResponse
     {
         $data = $request->validated();
