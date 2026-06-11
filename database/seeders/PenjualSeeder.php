@@ -18,6 +18,7 @@ class PenjualSeeder extends Seeder
                 'foto_profile' => null,
                 'created_at' => now(),
                 'updated_at' => now(),
+                // 'kantin_id' => 1
             ],
             [
                 'email' => 'b1@gmail.com',
@@ -26,6 +27,7 @@ class PenjualSeeder extends Seeder
                 'foto_profile' => null,
                 'created_at' => now(),
                 'updated_at' => now(),
+                // 'kantin_id' => 2
             ],
         ]);
     }
