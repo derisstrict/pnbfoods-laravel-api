@@ -17,6 +17,7 @@ class StoreOrderanRequest extends FormRequest
             'status_orderan' => 'required|string|max:50',
             'total_harga' => 'required|numeric|min:0',
             'tanggal_orderan' => 'required|date',
+            'pelanggan_id' => 'required|exists:pelanggan,id'
         ];
     }
 }

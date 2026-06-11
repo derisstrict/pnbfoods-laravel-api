@@ -17,6 +17,7 @@ class StorePembayaranRequest extends FormRequest
             'metode_pembayaran' => 'required|string|max:100',
             'total_pembayaran' => 'required|numeric|min:0',
             'status_pembayaran' => 'required|string|max:50',
+            'orderan_id' => 'required|exists:orderan,id'
         ];
     }
 }

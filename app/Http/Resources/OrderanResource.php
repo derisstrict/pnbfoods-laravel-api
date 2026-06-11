@@ -14,6 +14,7 @@ class OrderanResource extends JsonResource
             'status_orderan' => $this->status_orderan,
             'total_harga' => (float) $this->total_harga,
             'tanggal_orderan' => $this->tanggal_orderan,
+            'pelanggan_id' => $this->pelanggan_id,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];

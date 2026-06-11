@@ -13,6 +13,7 @@ class DetailOrderanResource extends JsonResource
             'id' => $this->id,
             'jumlah' => $this->jumlah,
             'catatan' => $this->catatan,
+            'orderan_id' => $this->orderan_id,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];

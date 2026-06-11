@@ -16,6 +16,7 @@ class StoreDetailOrderanRequest extends FormRequest
         return [
             'jumlah' => 'required|integer|min:1',
             'catatan' => 'nullable|string',
+            'orderan_id' => 'required|exists:orderan,id'
         ];
     }
 }

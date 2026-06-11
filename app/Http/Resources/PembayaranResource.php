@@ -14,6 +14,7 @@ class PembayaranResource extends JsonResource
             'metode_pembayaran' => $this->metode_pembayaran,
             'total_pembayaran' => (float) $this->total_pembayaran,
             'status_pembayaran' => $this->status_pembayaran,
+            'orderan_id' => $this->orderan_id,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];
