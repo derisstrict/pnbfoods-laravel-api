@@ -26,7 +26,8 @@ class DatabaseSeeder extends Seeder
             [
                 PelangganSeeder::class,
                 PenjualSeeder::class,
-                ProdukSeeder::class
+                ProdukSeeder::class,
+                KantinSeeder::class,
             ]
         );
     }

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Laravel\Sanctum\HasApiTokens;
 
@@ -41,9 +42,14 @@ class Penjual extends Authenticatable
         return url('storage/' . $this->foto_profile);
     }
 
-    public function kantin(): BelongsTo
+    // public function kantin(): BelongsTo
+    // {
+    //     return $this->belongsTo(Kantin::class);
+    // }
+
+    public function kantin(): HasOne
     {
-        return $this->belongsTo(Kantin::class);
+        return $this->hasOne(Kantin::class);
     }
 
     public function produk(): HasMany

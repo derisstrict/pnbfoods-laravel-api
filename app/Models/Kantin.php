@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Kantin extends Model
 {
@@ -25,8 +26,13 @@ class Kantin extends Model
         return url('storage/' . $this->foto_kantin);
     }
 
-    public function penjual(): HasOne
+    // public function penjual(): HasOne
+    // {
+    //     return $this->hasOne(Penjual::class);
+    // }
+
+    public function penjual(): BelongsTo
     {
-        return $this->hasOne(Penjual::class);
+        return $this->belongsTo(Penjual::class);
     }
 }

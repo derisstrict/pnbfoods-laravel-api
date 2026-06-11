@@ -16,11 +16,12 @@ return new class extends Migration
             $table->string('nama_kantin');
             $table->string('foto_kantin')->nullable();
             $table->string('kategori');
+            $table->foreignId('penjual_id')->nullable();
             $table->timestamps();
         });
 
-        Schema::table('penjual', function (Blueprint $table) {
-            $table->foreign('kantin_id')->references('id')->on('kantin')->nullOnDelete();
+        Schema::table('kantin', function (Blueprint $table) {
+            $table->foreign('penjual_id')->references('id')->on('penjual')->nullOnDelete();
         });
     }
 
@@ -29,8 +30,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('penjual', function (Blueprint $table) {
-            $table->dropForeign(['kantin_id']);
+        Schema::table('kantin', function (Blueprint $table) {
+            $table->dropForeign(['penjual_id']);
         });
 
         Schema::dropIfExists('kantins');

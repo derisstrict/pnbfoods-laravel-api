@@ -28,9 +28,10 @@ return new class extends Migration
             $table->string('nama');
             $table->string('password');
             $table->string('foto_profile')->nullable();
-            $table->foreignId('kantin_id')->nullable();
+            // $table->foreignId('kantin_id')->nullable();
             $table->timestamps();
         });
+
     }
 
     /**
