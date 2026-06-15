@@ -19,7 +19,8 @@ class UpdateProdukRequest extends FormRequest
             'deskripsi_produk' => 'nullable|string',
             'kategori_produk' => 'sometimes|string|max:100',
             'harga_produk' => 'sometimes|numeric|min:0',
-            'stok' => 'sometimes|integer|min:0',
+            'stok' => 'sometimes|integer|min:-1',
+            'penjual_id' => 'required|exists:penjual,id'
         ];
     }
 }
