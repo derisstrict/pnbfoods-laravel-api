@@ -14,6 +14,7 @@ class Kantin extends Model
         'nama_kantin',
         'foto_kantin',
         'kategori',
+        'penjual_id',
     ];
 
     protected $appends = ['foto_url'];

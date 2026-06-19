@@ -33,3 +33,4 @@ Route::post('/pelanggan/forgot-password', [PelangganController::class, 'forgotPa
 Route::post('/penjual/forgot-password', [PenjualController::class, 'forgotPassword']);
 
 Route::get('produk/penjual/{penjual_id}', [ProdukController::class, 'dariPenjualId']);
+Route::get('kantin/penjual/{penjual_id}', [KantinController::class, 'dariPenjualId']);

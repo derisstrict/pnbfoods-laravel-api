@@ -35,6 +35,7 @@ class KantinController extends Controller
             'nama_kantin' => 'required|string|max:255',
             'foto_kantin' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
             'kategori' => 'required|string|max:100',
+            'penjual_id' => 'nullable|integer',
         ]);
 
         if ($request->hasFile('foto_kantin')) {
@@ -48,6 +49,24 @@ class KantinController extends Controller
             'message' => 'Kantin berhasil ditambahkan',
             'data' => $kantin,
         ], 201);
+    }
+
+    public function dariPenjualId($penjual_id): JsonResponse
+    {
+        $kantin = Kantin::where('penjual_id', $penjual_id)->first();
+
+        if (!$kantin) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Kantin tidak ditemukan',
+            ], 404);
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Detail kantin berhasil diambil',
+            'data' => $kantin,
+        ]);
     }
 
     public function show($id): JsonResponse
