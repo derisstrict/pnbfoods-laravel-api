@@ -33,27 +33,6 @@ class MidtransController extends Controller
             'items.*.catatan' => 'nullable|string',
         ]);
 
-        $existingPembayaran = Pembayaran::whereHas('orderan', function ($q) use ($validated) {
-            $q->where('pelanggan_id', $validated['pelanggan_id'])
-              ->where('status_orderan', 'menunggu_pembayaran');
-        })->where('status_pembayaran', 'menunggu_pembayaran')
-          ->where('expired_at', '>', now())
-          ->where('created_at', '>', now()->subMinutes(30))
-          ->latest()
-          ->first();
-
-        if ($existingPembayaran) {
-            return response()->json([
-                'success' => true,
-                'message' => 'Menggunakan pembayaran yang sudah ada',
-                'data' => [
-                    'pembayaran' => new PembayaranResource($existingPembayaran),
-                    'qr_image_url' => $existingPembayaran->qr_image_url,
-                    'midtrans_order_id' => $existingPembayaran->midtrans_order_id,
-                ],
-            ], 200);
-        }
-
         try {
             $result = DB::transaction(function () use ($validated) {
                 $orderan = Orderan::create([
