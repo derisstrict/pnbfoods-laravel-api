@@ -2,18 +2,21 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Kantin extends Model
 {
+    use HasFactory;
     protected $table = 'kantin';
 
     protected $fillable = [
         'nama_kantin',
         'foto_kantin',
         'kategori',
+        'penjual_id',
     ];
 
     protected $appends = ['foto_url'];
