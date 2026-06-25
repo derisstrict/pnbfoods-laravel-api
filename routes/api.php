@@ -12,6 +12,7 @@ use App\Http\Controllers\Api\PenjualController;
 
 Route::apiResource('produk', ProdukController::class);
 Route::apiResource('kantin', KantinController::class);
+Route::get('orderan/riwayat', [OrderanController::class, 'riwayat']); //?db riwayat || untuk route ny
 Route::apiResource('orderan', OrderanController::class);
 Route::apiResource('detail-orderan', DetailOrderanController::class);
 Route::apiResource('pembayaran', PembayaranController::class);
