@@ -21,10 +21,14 @@ class FavoritResource extends JsonResource
                 'deskripsi_produk'=> $this->produk->deskripsi_produk,
                 'kategori_produk' => $this->produk->kategori_produk,
                 'harga_produk'    => $this->produk->harga_produk,
-                'stok'            => $this->produk->stok,
-                'kantin'          => $this->produk->penjual ? [
-                    'id'           => $this->produk->penjual->id,
-                    'nama_kantin'  => $this->produk->penjual->nama_kantin ?? $this->produk->penjual->nama,
+                 'stok'            => $this->produk->stok,
+                'kantin' => $this->produk->penjual && $this->produk->penjual->kantin ? [
+                    'id'          => $this->produk->penjual->kantin->id,
+                    'nama_kantin' => $this->produk->penjual->kantin->nama_kantin,
+                    'foto_kantin' => $this->produk->penjual->kantin->foto_kantin,
+                    'foto_url'    => $this->produk->penjual->kantin->foto_url,
+                    'kategori'    => $this->produk->penjual->kantin->kategori,
+                    'penjual_id'  => $this->produk->penjual->id,
                 ] : null,
                 'jumlah_favorit'  => $this->produk->favorit()->count(),
             ],

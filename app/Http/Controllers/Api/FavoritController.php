@@ -16,10 +16,10 @@ class FavoritController extends Controller
             'pelanggan_id' => 'required|integer|exists:pelanggan,id',
         ]);
 
-        $favorit = Favorit::with(['produk.penjual', 'produk.favorit'])
-            ->where('pelanggan_id', $request->pelanggan_id)
-            ->orderBy('created_at', 'desc')
-            ->get();
+        $favorit = Favorit::with(['produk.penjual.kantin', 'produk.favorit'])
+                ->where('pelanggan_id', $request->pelanggan_id)
+                ->orderBy('created_at', 'desc')
+                ->get();
 
         return response()->json([
             'success' => true,
