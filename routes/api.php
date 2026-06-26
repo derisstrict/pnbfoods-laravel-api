@@ -13,7 +13,6 @@ use App\Http\Controllers\Api\MidtransController;
 
 Route::apiResource('produk', ProdukController::class);
 Route::apiResource('kantin', KantinController::class);
-Route::apiResource('orderan', OrderanController::class);
 Route::apiResource('detail-orderan', DetailOrderanController::class);
 Route::apiResource('pembayaran', PembayaranController::class);
 Route::apiResource('favorit', FavoritController::class);
@@ -23,6 +22,8 @@ Route::post('penjual/login', [PenjualController::class, 'login']);
 Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('pelanggan', PelangganController::class)->except(['store']);
     Route::post('pelanggan/logout', [PelangganController::class, 'logout']);
+    Route::get('orderan/riwayat', [OrderanController::class, 'riwayat']); //?db riwayat || untuk route ny
+    Route::apiResource('orderan', OrderanController::class);
 });
 Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('penjual', PenjualController::class)->except(['store']);

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Models\Orderan;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreOrderanRequest;
 use App\Http\Requests\UpdateOrderanRequest;
@@ -28,6 +29,25 @@ class OrderanController extends Controller
                 'total' => $orderan->total(),
             ],
         ]);
+    }
+
+    public function riwayat(Request $request): JsonResponse
+    {
+        $pelanggan = $request->user();
+
+        $orderan = Orderan::with([
+                'detailOrderan.produk.penjual.kantin',
+                'pembayaran',
+            ])
+            ->where('pelanggan_id', $pelanggan->id) //!typo whare ganti where
+            ->orderBy('tanggal_orderan', 'desc')
+            ->get();
+        return response()->json([
+             'success' => true,
+            'message' => 'Riwayat orderan berhasil diambil',
+            'data' => OrderanResource::collection($orderan),
+        ]);
+
     }
 
     public function store(StoreOrderanRequest $request): JsonResponse
