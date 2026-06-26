@@ -42,6 +42,14 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+        'pelanggan' => [ //*memeriksa tabel pelanggan mneggunakan driver dan provider apa ?
+            'driver' => 'sanctum',
+            'provider' => 'pelanggan',
+        ],
+        'penjual' => [ //*memeriksa tabel pelanggan menggunakan driver dan provider apa?
+            'driver' => 'sanctum',
+            'provider' => 'penjual',
+        ],
     ],
 
     /*
@@ -65,6 +73,14 @@ return [
         'users' => [
             'driver' => 'eloquent',
             'model' => env('AUTH_MODEL', User::class),
+        ],
+        'pelanggan' => [ //*ngasih tau tabel pakai model apa
+            'driver' => 'eloquent',
+            'model' => App\Models\Pelanggan::class,
+        ],
+        'penjual' => [ //*ngasih tau laravel tabel pakai mode apa  
+            'driver' => 'eloquent',
+            'model' => App\Models\Penjual::class,
         ],
 
         // 'users' => [

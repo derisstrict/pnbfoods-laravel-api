@@ -39,7 +39,7 @@ class OrderanController extends Controller
                 'detailOrderan.produk.penjual.kantin',
                 'pembayaran',
             ])
-            ->whare('pelanggan_id', $pelanggan->id)
+            ->where('pelanggan_id', $pelanggan->id) //!typo whare ganti where
             ->orderBy('tanggal_orderan', 'desc')
             ->get();
         return response()->json([
