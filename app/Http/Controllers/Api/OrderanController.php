@@ -40,6 +40,7 @@ class OrderanController extends Controller
                 'pembayaran',
             ])
             ->where('pelanggan_id', $pelanggan->id) //!typo whare ganti where
+            ->where('status_orderan', 'selesai')
             ->orderBy('tanggal_orderan', 'desc')
             ->get();
         return response()->json([
