@@ -12,6 +12,7 @@ use App\Http\Controllers\Api\PenjualController;
 use App\Http\Controllers\Api\MidtransController;
 
 Route::apiResource('produk', ProdukController::class);
+Route::get('kantin/penjual/{penjual_id}', [KantinController::class, 'dariPenjualId']);
 Route::apiResource('kantin', KantinController::class);
 Route::apiResource('detail-orderan', DetailOrderanController::class);
 Route::apiResource('pembayaran', PembayaranController::class);

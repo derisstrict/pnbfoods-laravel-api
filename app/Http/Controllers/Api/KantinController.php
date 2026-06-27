@@ -33,9 +33,19 @@ class KantinController extends Controller
     {
         $data = $request->validate([
             'nama_kantin' => 'required|string|max:255',
-            'foto_kantin' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+            'foto_kantin' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
             'kategori' => 'required|string|max:100',
+            'penjual_id' => 'required|integer|exists:penjual,id',
         ]);
+
+        // Pastikan 1 akun hanya memiliki 1 kantin
+        $existingKantin = Kantin::where('penjual_id', $data['penjual_id'])->first();
+        if ($existingKantin) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Penjual sudah memiliki kantin',
+            ], 400);
+        }
 
         if ($request->hasFile('foto_kantin')) {
             $data['foto_kantin'] = $request->file('foto_kantin')->store('kantin', 'public');
@@ -81,7 +91,7 @@ class KantinController extends Controller
 
         $data = $request->validate([
             'nama_kantin' => 'sometimes|required|string|max:255',
-            'foto_kantin' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+            'foto_kantin' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
             'kategori' => 'sometimes|required|string|max:100',
         ]);
 
@@ -91,6 +101,8 @@ class KantinController extends Controller
             }
 
             $data['foto_kantin'] = $request->file('foto_kantin')->store('kantin', 'public');
+        } else {
+            unset($data['foto_kantin']);
         }
 
         $kantin->update($data);
@@ -122,6 +134,24 @@ class KantinController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Kantin berhasil dihapus',
+        ]);
+    }
+
+    public function dariPenjualId($penjual_id): JsonResponse
+    {
+        $kantin = Kantin::where('penjual_id', $penjual_id)->first();
+
+        if (!$kantin) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Kantin tidak ditemukan untuk penjual ini',
+            ], 404);
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Kantin penjual berhasil diambil',
+            'data' => $kantin,
         ]);
     }
 }
