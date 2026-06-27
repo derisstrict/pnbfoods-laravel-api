@@ -11,6 +11,8 @@ use App\Http\Controllers\Api\PelangganController;
 use App\Http\Controllers\Api\PenjualController;
 use App\Http\Controllers\Api\MidtransController;
 
+Route::get('orderan/pelanggan/{pelangganId}', [OrderanController::class, 'getByPelanggan']);
+
 Route::apiResource('produk', ProdukController::class);
 Route::apiResource('kantin', KantinController::class);
 Route::apiResource('orderan', OrderanController::class);
