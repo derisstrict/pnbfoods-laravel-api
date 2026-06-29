@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreOrderanRequest;
 use App\Http\Requests\UpdateOrderanRequest;
 use App\Http\Resources\OrderanResource;
+use App\Models\Produk;
 
 class OrderanController extends Controller
 {
@@ -135,6 +136,32 @@ class OrderanController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Daftar orderan pelanggan berhasil diambil',
+            'data' => OrderanResource::collection($orderan),
+            'pagination' => [
+                'current_page' => $orderan->currentPage(),
+                'last_page' => $orderan->lastPage(),
+                'per_page' => $orderan->perPage(),
+                'total' => $orderan->total(),
+            ],
+        ]);
+    }
+
+    public function getByKantin($kantinId): JsonResponse
+    {
+        $orderan = Orderan::with([
+                'detailOrderan.produk.penjual.kantin',
+                'pembayaran',
+                'pelanggan',
+            ])
+            ->whereHas('detailOrderan.produk.penjual.kantin', function ($query) use ($kantinId) {
+                $query->where('kantin.id', $kantinId);
+            })
+            ->orderBy('created_at', 'desc')
+            ->paginate(self::PER_PAGE);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Daftar orderan kantin berhasil diambil',
             'data' => OrderanResource::collection($orderan),
             'pagination' => [
                 'current_page' => $orderan->currentPage(),
