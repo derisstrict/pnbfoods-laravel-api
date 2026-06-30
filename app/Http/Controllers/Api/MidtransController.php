@@ -145,7 +145,7 @@ class MidtransController extends Controller
             ]);
 
             if ($newStatus === 'lunas') {
-                $pembayaran->orderan->update(['status_orderan' => 'diproses']);
+                $pembayaran->orderan->update(['status_orderan' => 'lunas']);
             } elseif (in_array($newStatus, ['gagal', 'dibatalkan', 'kadaluwarsa'])) {
                 $pembayaran->orderan->update(['status_orderan' => $newStatus]);
             }
@@ -194,7 +194,7 @@ class MidtransController extends Controller
                         ]);
 
                         if ($newStatus === 'lunas') {
-                            $pembayaran->orderan->update(['status_orderan' => 'diproses']);
+                            $pembayaran->orderan->update(['status_orderan' => 'lunas']);
                         } elseif (in_array($newStatus, ['gagal', 'dibatalkan', 'kadaluwarsa'])) {
                             $pembayaran->orderan->update(['status_orderan' => $newStatus]);
                         }

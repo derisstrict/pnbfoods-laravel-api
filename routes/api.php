@@ -18,6 +18,8 @@ Route::get('orderan/pelanggan/{pelangganId}', [OrderanController::class, 'getByP
 Route::get('orderan/kantin/{kantinId}', [OrderanController::class, 'getByKantin']);
 Route::apiResource('detail-orderan', DetailOrderanController::class);
 Route::apiResource('pembayaran', PembayaranController::class);
+
+Route::get('favorit/cek', [FavoritController::class, 'cek']);
 Route::apiResource('favorit', FavoritController::class);
 
 Route::post('pelanggan/login', [PelangganController::class, 'login']);
@@ -39,6 +41,8 @@ Route::post('/pelanggan/forgot-password', [PelangganController::class, 'forgotPa
 Route::post('/penjual/forgot-password', [PenjualController::class, 'forgotPassword']);
 
 Route::get('produk/penjual/{penjual_id}', [ProdukController::class, 'dariPenjualId']);
+
+
 
 Route::post('pembayaran/snap', [MidtransController::class, 'snapTransaction']);
 Route::get('pembayaran/{pembayaran}/status', [MidtransController::class, 'status']);
