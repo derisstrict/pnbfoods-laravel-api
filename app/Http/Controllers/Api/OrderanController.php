@@ -156,6 +156,7 @@ class OrderanController extends Controller
             ->whereHas('detailOrderan.produk.penjual.kantin', function ($query) use ($kantinId) {
                 $query->where('kantin.id', $kantinId);
             })
+            ->orderBy('created_at', 'desc')
             ->orderByRaw("
                 CASE status_orderan
                     WHEN 'lunas' THEN 0
@@ -166,7 +167,6 @@ class OrderanController extends Controller
                     ELSE 5
                 END
             ")
-            ->orderBy('created_at', 'desc')
             ->paginate(self::PER_PAGE);
 
         return response()->json([
