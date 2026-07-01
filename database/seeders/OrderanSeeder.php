@@ -28,7 +28,7 @@ class OrderanSeeder extends Seeder
 
     $dataset = [
         [
-            'status_orderan'    => 'selesai',
+            'status_orderan'    => 'lunas',
             'tanggal_orderan'   => $now->copy()->subDays(1)->setTime(12, 38, 00),
             'pelanggan_id'      => $pelangganIds->first(),
             'status_pembayaran' => 'Berhasil',
@@ -40,7 +40,7 @@ class OrderanSeeder extends Seeder
             ]
         ],
         [
-            'status_orderan'    => 'proses',
+            'status_orderan'    => 'diproses',
             'tanggal_orderan'   => $now->copy()->subDays(1)->setTime(12, 38, 00),
             'pelanggan_id'      => $pelangganIds->first(),
             'status_pembayaran' => 'Berhasil',
@@ -52,7 +52,7 @@ class OrderanSeeder extends Seeder
             ]
         ],
         [
-            'status_orderan'    => 'tunggu',
+            'status_orderan'    => 'menunggu',
             'tanggal_orderan'   => $now->copy()->subDays(1)->setTime(12, 38, 00),
             'pelanggan_id'      => $pelangganIds->first(),
             'status_pembayaran' => 'Berhasil',
@@ -68,6 +68,18 @@ class OrderanSeeder extends Seeder
             'tanggal_orderan'   => $now->copy()->subDays(1)->setTime(12, 38, 00),
             'pelanggan_id'      => $pelangganIds->first(),
             'status_pembayaran' => 'Gagal',
+            'snap_token'        => 'snap-token-001-xyz',
+            'midtrans_status'   => 'settlement',
+            'items' => [
+                ['produk_id' => $produkIds->get(0) ?? $produkIds->first(), 'jumlah' => 3],
+                ['produk_id' => $produkIds->get(1) ?? $produkIds->first(), 'jumlah' => 1],
+            ]
+        ],
+        [
+            'status_orderan'    => 'selesai',
+            'tanggal_orderan'   => $now->copy()->subDays(1)->setTime(12, 38, 00),
+            'pelanggan_id'      => $pelangganIds->first(),
+            'status_pembayaran' => 'Berhasil',
             'snap_token'        => 'snap-token-001-xyz',
             'midtrans_status'   => 'settlement',
             'items' => [
