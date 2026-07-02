@@ -26,6 +26,17 @@ class ProdukSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
+                'nama_produk' => 'Mie Ayam Bakso',
+                'foto_produk' => null,
+                'deskripsi_produk' => 'Mie Ayam Isi Bakso',
+                'kategori_produk' => 'Makanan',
+                'harga_produk' => 15000,
+                'penjual_id' => 1,
+                'stok' => 1,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
                 'nama_produk' => 'Nasi Kuning',
                 'foto_produk' => null,
                 'deskripsi_produk' => 'Nasi Yellow',

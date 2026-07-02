@@ -9,6 +9,8 @@ class OrderanResource extends JsonResource
 {
     public function toArray(Request $request): array
     {
+        $detailOrderan = $this->detailOrderan ?? collect();
+        $kantin = $detailOrderan->first()?->produk?->penjual?->kantin;
         return [
             'id' => $this->id,
             'status_orderan' => $this->status_orderan,
@@ -17,6 +19,15 @@ class OrderanResource extends JsonResource
             'pelanggan_id' => $this->pelanggan_id,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
+
+            'pelanggan' => $this->whenLoaded('pelanggan', function() {
+                return [
+                    'nama' => $this->pelanggan->nama,
+                    'nim' => $this->pelanggan->nim,
+                    'foto_profile' => $this->pelanggan->foto_profile,
+                    'foto_url' => $this->pelanggan->foto_url,
+                ];
+            }),
 
             //?db riwayat bagian detail item belanja
             'detail_orderan' => $this->whenLoaded('detailOrderan', function(){
@@ -39,7 +50,7 @@ class OrderanResource extends JsonResource
             }),
 
             //?db riwayat bagian info kantin
-            'kantin' => $this->whenloaded('detailOrderan', function(){
+            'kantin' => $this->whenLoaded('detailOrderan', function(){
                 $kantin = $this->detailOrderan->first()?->produk?->penjual?->kantin;
 
                 if(!$kantin){

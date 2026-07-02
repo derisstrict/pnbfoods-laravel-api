@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreOrderanRequest;
 use App\Http\Requests\UpdateOrderanRequest;
 use App\Http\Resources\OrderanResource;
+use App\Models\Produk;
 
 class OrderanController extends Controller
 {
@@ -52,7 +53,13 @@ class OrderanController extends Controller
     }
 
     public function store(StoreOrderanRequest $request): JsonResponse
-    {
+    {   
+        $totalHarga = 0;
+        foreach ($request->items as $item) {
+            $produk = Produk::findOrFail($item['produk_id']);
+            $totalHarga += $produk->harga_produk * $item['jumlah'];
+        }
+
         $orderan = Orderan::create($request->validated());
 
         return response()->json([
@@ -116,6 +123,62 @@ class OrderanController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Orderan berhasil dihapus',
+        ]);
+    }
+
+    public function getByPelanggan($pelangganId): JsonResponse
+    {
+        $orderan = Orderan::where('pelanggan_id', $pelangganId)
+                          ->with(['detailOrderan.produk.penjual.kantin', 'pembayaran'])
+                          ->orderBy('created_at', 'desc')
+                          ->paginate(self::PER_PAGE);
+        
+        return response()->json([
+            'success' => true,
+            'message' => 'Daftar orderan pelanggan berhasil diambil',
+            'data' => OrderanResource::collection($orderan),
+            'pagination' => [
+                'current_page' => $orderan->currentPage(),
+                'last_page' => $orderan->lastPage(),
+                'per_page' => $orderan->perPage(),
+                'total' => $orderan->total(),
+            ],
+        ]);
+    }
+
+    public function getByKantin($kantinId): JsonResponse
+    {
+        $orderan = Orderan::with([
+                'detailOrderan.produk.penjual.kantin',
+                'pembayaran',
+                'pelanggan',
+            ])
+            ->whereHas('detailOrderan.produk.penjual.kantin', function ($query) use ($kantinId) {
+                $query->where('kantin.id', $kantinId);
+            })
+            ->orderBy('created_at', 'desc')
+            ->orderByRaw("
+                CASE status_orderan
+                    WHEN 'lunas' THEN 0
+                    WHEN 'diproses' THEN 1
+                    WHEN 'menunggu' THEN 2
+                    WHEN 'selesai' THEN 3
+                    WHEN 'batal' THEN 4
+                    ELSE 5
+                END
+            ")
+            ->paginate(self::PER_PAGE);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Daftar orderan kantin berhasil diambil',
+            'data' => OrderanResource::collection($orderan),
+            'pagination' => [
+                'current_page' => $orderan->currentPage(),
+                'last_page' => $orderan->lastPage(),
+                'per_page' => $orderan->perPage(),
+                'total' => $orderan->total(),
+            ],
         ]);
     }
 }
