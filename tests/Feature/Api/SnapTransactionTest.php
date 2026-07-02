@@ -140,7 +140,7 @@ class SnapTransactionTest extends TestCase
 
         $this->assertDatabaseHas('orderan', [
             'id' => $orderan->id,
-            'status_orderan' => 'diproses',
+            'status_orderan' => 'lunas',
         ]);
     }
 }

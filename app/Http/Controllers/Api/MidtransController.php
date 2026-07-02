@@ -31,7 +31,26 @@ class MidtransController extends Controller
             'items.*.harga' => 'required|integer|min:0',
             'items.*.jumlah' => 'required|integer|min:1',
             'items.*.catatan' => 'nullable|string',
+            'orderan_id' => 'nullable|exists:orderan,id',
         ]);
+
+        if ($request->filled('orderan_id')) {
+            $pembayaran = Pembayaran::where('orderan_id', $request->orderan_id)
+                ->where('status_pembayaran', 'menunggu_pembayaran')
+                ->first();
+
+            if ($pembayaran) {
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Menggunakan pembayaran yang sudah ada',
+                    'data' => [
+                        'pembayaran' => new PembayaranResource($pembayaran),
+                        'qr_image_url' => $pembayaran->qr_image_url,
+                        'midtrans_order_id' => $pembayaran->midtrans_order_id,
+                    ],
+                ], 200);
+            }
+        }
 
         try {
             $result = DB::transaction(function () use ($validated) {

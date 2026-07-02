@@ -81,7 +81,7 @@ class MidtransNotificationTest extends TestCase
 
         $this->assertDatabaseHas('orderan', [
             'id' => $this->orderan->id,
-            'status_orderan' => 'diproses',
+            'status_orderan' => 'lunas',
         ]);
     }
 
